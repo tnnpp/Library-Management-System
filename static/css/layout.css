@@ -125,3 +125,23 @@ footer {
   border-radius: 10px;
   padding-right: 20px;
 }
+
+/* Sign Up and Log In*/
+
+.container-form {
+  display: grid;
+  grid-template-columns: 700px;
+  grid-template-rows: 400px;
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.item-form {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px -4px #000000;
+  justify-self: stretch;
+  color: #f8f0e5;
+  background-color: #0f2c59;
+  padding: 50px;
+}
