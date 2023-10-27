@@ -1,13 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans+Narrow&display=swap");
+
 body {
   margin: 0px;
-  font-family: "JetBrains Mono", monospace;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-size: 18px;
 }
 
 /* Buttons */
 
 button {
   padding: 10px 20px 10px 20px;
-  background-color: #f8f0e5;
+  background-color: #ffffff;
   border-radius: 20px;
   border: none;
   font-family: "JetBrains Mono", monospace;
@@ -18,13 +21,14 @@ button {
 
 button:hover {
   background-color: #bdd2db;
+  color: #ffffff;
 }
 
 /* Input fields */
 
 input {
   padding: 10px 20px 10px 20px;
-  background-color: #f8f0e5;
+  background-color: #ffffff;
   border-radius: 20px;
   border: none;
   font-family: "JetBrains Mono", monospace;
@@ -33,20 +37,19 @@ input {
 /* Links */
 
 a {
-  color: #f8f0e5;
+  color: #0f2c59;
   text-decoration: none;
 }
 
 a:visited:hover {
-  color: #dac0a3;
+  color: #ffffff;
   text-decoration: none;
 }
 
 /* Header */
 
 header {
-  background-color: #0f2c59;
-  color: #f8f0e5;
+  background-color: #bdd2db;
   padding: 30px;
 }
 
@@ -66,13 +69,13 @@ header {
 /* Footer */
 
 footer {
-  background-color: #0f2c59;
-  color: #f8f0e5;
+  background-color: #bdd2db;
+  color: #0f2c59;
   padding: 10px 30px;
   font-size: 12px;
 }
 
-/* Trending Books*/
+/* Trending Books */
 
 .container-trending {
   display: grid;
@@ -94,8 +97,8 @@ footer {
   border-radius: 10px;
   box-shadow: 2px 2px 10px -4px #000000;
   justify-self: stretch;
-  background-color: #0f2c59;
-  color: #f8f0e5;
+  background-color: #bdd2db;
+  color: #0f2c59;
 }
 
 .item-trending-2 {
@@ -104,8 +107,8 @@ footer {
   border-radius: 10px;
   box-shadow: 2px 2px 10px -4px #000000;
   justify-self: stretch;
-  background-color: #0f2c59;
-  color: #f8f0e5;
+  background-color: #bdd2db;
+  color: #0f2c59;
 }
 
 .item-trending-3 {
@@ -114,13 +117,13 @@ footer {
   border-radius: 10px;
   box-shadow: 2px 2px 10px -4px #000000;
   justify-self: stretch;
-  background-color: #0f2c59;
-  color: #f8f0e5;
+  background-color: #bdd2db;
+  color: #0f2c59;
 }
 
 .image-trending {
-  width: 250px;
-  object-fit: cover;
+  width: 230px;
+  object-fit: contain;
   float: left;
   border-radius: 10px;
   padding-right: 20px;
