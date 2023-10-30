@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Django Automatically generate ID
 class Students(models.Model):
     # extend the user from allauth
+    studentID = models.ForeignKey(User,on_delete=models.CASCADE())
     firstName = models.ForeignKey(User.first_name,on_delete=models.CASCADE)
     lastName = models.ForeignKey(User.last_name,on_delete=models.CASCADE)
     phoneNumber = models.CharField(max_length=10)
@@ -11,7 +12,8 @@ class Students(models.Model):
     department = models.CharField(max_length=255)
 
     def book_borrowed(self):
-        pass
+        book_borrow = Borrow.objects.filter(studentID=self.studentID)
+        return [borrow.bookID for borrow in book_borrow]
 
 class Faculty(models.Model):
     facultyName = models.CharField(max_length=255)
@@ -41,9 +43,9 @@ class BookIssues(models.Model):
     issuerID = models.IntegerField()
     dueDate = models.DateField()
     returnDate = models.DateField()
-    issueType = models.CharField(max_length=50)
+    issuerType = models.CharField(max_length=50)
 
-    def is_issue(self):
+    def is_issuer(self):
         return self.issueType in ['Student', 'Facalty']
 
 class Borrow(models.Model):
@@ -51,6 +53,15 @@ class Borrow(models.Model):
     bookID = models.ForeignKey(Books,on_delete=models.CASCADE)
     borrowDate = models.DateField()
     dueDate = models.DateField()
+    returnDate = models.DateField(null=True)
+    BorrowerType = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+
+    def is_Borrower(self):
+        return self.BorrowerType in ['Student', 'Facalty']
+
+    def is_status(self):
+        return self.status in ["returned","not return"]
 
 class Fines(models.Model):
     fineID = models.IntegerField()
