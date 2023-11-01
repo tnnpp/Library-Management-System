@@ -1,0 +1,8 @@
+<h1>searched books</h1>
+<ul>
+    {% for result in results %}
+        {{ result.title }}
+    {% empty %}
+        <li>No results found.</li>
+    {% endfor %}
+</ul>

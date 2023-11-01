@@ -9,7 +9,10 @@
   <body>
     <header class="container-header">
       <a href="/views/home.html">Library Management System</a>
-      <input type="text" placeholder="Search" />
+      <form method="post" action="{% url 'library:search' %}"  >
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
       <dev class="item-header-3">
         <a href="/views/my-books.html">My Books</a>
         <a href="/views/login.html">Log In</a>

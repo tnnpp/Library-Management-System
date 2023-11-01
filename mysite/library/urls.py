@@ -3,5 +3,6 @@ from . import views
 
 app_name = 'library'
 urlpatterns = [
-    path('', views.home, name='home')
+    path('', views.home, name='home'),
+    path('/search', views.search, name='search')
    ]
