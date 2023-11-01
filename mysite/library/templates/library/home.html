@@ -25,19 +25,25 @@
         <h1 class="item-title">Trending Books</h1>
         <dev class="item-trending-1">
           <img src="/static/book2.jpg" class="image-trending" />
-          <h2>The Art of Strategic Innovation</h2>
-          <p>Noah Schumacher</p>
+          <a href="{% url 'library:book' 1 %}">
+            <h2>The Art of Strategic Innovation</h2>
+          </a>
+            <p>Noah Schumacher</p>
           <!--<a href="/views/book.html"><button>Read More</button></a>-->
         </dev>
         <dev class="item-trending-2">
           <img src="/static/book3.jpg" class="image-trending" />
-          <h2>The Language of Letters</h2>
+          <a href="{% url 'library:book' 2 %}">
+            <h2>The Language of Letters</h2>
+          </a>
           <p>Hanna Olsson</p>
           <!--<a href="/views/book.html"><button>Read More</button></a>-->
         </dev>
         <dev class="item-trending-3">
           <img src="/static/book1.jpg" class="image-trending" />
-          <h2>The Way</h2>
+          <a href="{% url 'library:book' 3 %}">
+            <h2>The Way</h2>
+          </a>
           <p>Howard Ong</p>
           <!--<a href="/views/book.html"><button>Read More</button></a>-->
         </dev>

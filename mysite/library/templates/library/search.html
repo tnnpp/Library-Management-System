@@ -6,9 +6,9 @@
 <h2>searched books</h2>
 <ul>
     {% for result in results %}
-        {{ result.title }}
+        <a href="{% url 'library:book' result.id %}">{{ result.title }}</a>
     {% empty %}
         <li>No results found.</li>
     {% endfor %}
 </ul>
-<a href="{% url 'library:search' %}"> Go back to home page.</a>
+<a href="{% url 'library:home' %}"> Go back to home page.</a>
