@@ -1,4 +1,9 @@
-<h1>searched books</h1>
+<h1>search</h1>
+<form method="post" action="{% url 'library:search' %}"  >
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
+<h2>searched books</h2>
 <ul>
     {% for result in results %}
         {{ result.title }}
@@ -6,3 +11,4 @@
         <li>No results found.</li>
     {% endfor %}
 </ul>
+<a href="{% url 'library:search' %}"> Go back to home page.</a>
