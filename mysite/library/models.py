@@ -3,40 +3,35 @@ from django.contrib.auth.models import User
 
 # Django Automatically generate ID
 # when create user automatic create Student or faculty models or
-class Students(models.Model):
+class Users(models.Model):
     # extend the user from allauth
-    studentID = models.ForeignKey(User,on_delete=models.CASCADE)
+    userID = models.OneToOneField(User, on_delete=models.CASCADE)
     # In user already have firstname lastname
     phoneNumber = models.CharField(max_length=10)
     department = models.CharField(max_length=255)
+    USER_CHOICES = (
+        ('Student', 'Student'),
+        ('Facalty', 'Facalty'),
+    )
+    userType = models.CharField(max_length=50, choices=USER_CHOICES, default='Student')
 
     def book_borrowed(self):
-        book_borrow = Borrow.objects.filter(studentID=self.studentID)
+        book_borrow = Borrow.objects.filter(userID=self.userID)
         return [borrow.bookID for borrow in book_borrow]
 
-
-class Faculty(models.Model):
-    # extent user
-    faculty_id = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
-    facultyName = models.CharField(max_length=255)
-    address = models.TextField()
-    phone_number = models.CharField(max_length=255)
-    email = models.CharField(max_length=255)
-    department = models.CharField(max_length=255)
+    def __str__(self):
+        return self.userID.first_name
 
 class Authors(models.Model):
-    firstName = models.CharField(max_length=255)
-    lastName = models.CharField(max_length=255)
-
-    def writed_books(self):
-        return self.books_set
+    firstname = models.CharField(max_length=255)
+    lastname = models.CharField(max_length=255)
 
     def __str__(self):
-        return  self.title
+        return self.firstname
 
 class Books(models.Model):
     title = models.CharField(max_length=255)
-    author_id = models.ForeignKey(Authors, on_delete=models.CASCADE)
+    authorID = models.ForeignKey(Authors, on_delete=models.CASCADE)
     ISBN = models.CharField(max_length=13)
     yearPublished = models.IntegerField()
     genre = models.CharField(max_length=255)
@@ -51,32 +46,14 @@ class Books(models.Model):
     def __str__(self):
         return  self.title
 
-class BookIssues(models.Model):
-    bookID = models.ForeignKey(Books, on_delete=models.CASCADE)
-    issuerID = models.IntegerField()
-    dueDate = models.DateField()
-    returnDate = models.DateField()
-    ISSUER_CHOICES = (
-        ('Student', 'Student'),
-        ('Facalty', 'Facalty'),
-    )
-    issuerType = models.CharField(max_length=50,choices=ISSUER_CHOICES,default='Available')
-
-    def __str__(self):
-        return f"book:{self.bookID},Issuer:{self.issuerID}"
 
 class Borrow(models.Model):
-    issuerID = models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    userID = models.ForeignKey(Users,on_delete=models.CASCADE,default=None)
     bookID = models.ForeignKey(Books,on_delete=models.CASCADE)
     borrowDate = models.DateField()
     dueDate = models.DateField()
     returnDate = models.DateField(null=True)
 
-    ISSUER_CHOICES = (
-        ('Student', 'Student'),
-        ('Facalty', 'Facalty'),
-    )
-    issuerType = models.CharField(max_length=50, choices=ISSUER_CHOICES,default='Available')
     STATUS_CHOICES = (
         ('Available', 'Available'),
         ('Checked Out', 'Checked Out'),
@@ -85,11 +62,10 @@ class Borrow(models.Model):
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
 
     def __str__(self):
-        return f"book:{self.bookID},borrower:{self.issuerID}"
+        return f"book:{self.bookID},borrower:{self.userID}"
 
 class Fines(models.Model):
-    fineID = models.IntegerField()
-    issueID = models.ForeignKey(BookIssues, on_delete=models.CASCADE)
+    borrowID = models.ForeignKey(Borrow, on_delete=models.CASCADE,default=None)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     reason = models.CharField(max_length=255)
     dateIssued = models.DateField()
