@@ -16,7 +16,7 @@ def signup(request):
             raw_passwd = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_passwd)
             login(request, user)
-            return redirect('polls:index')
+            return redirect('library:home')
         else:
             # display a message in signup.html
             print(form.errors)

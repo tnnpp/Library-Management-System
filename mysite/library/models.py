@@ -1,14 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 # Django Automatically generate ID
-# when create user automatic create Student or faculty models or
 class Users(models.Model):
     # extend the user from allauth
     userID = models.OneToOneField(User, on_delete=models.CASCADE)
     # In user already have firstname lastname
-    phoneNumber = models.CharField(max_length=10)
-    department = models.CharField(max_length=255)
+    phoneNumber = models.CharField(max_length=10,null=True)
+    department = models.CharField(max_length=255,null=True)
     USER_CHOICES = (
         ('Student', 'Student'),
         ('Facalty', 'Facalty'),
@@ -20,7 +20,7 @@ class Users(models.Model):
         return [borrow.bookID for borrow in book_borrow]
 
     def __str__(self):
-        return self.userID.first_name
+        return str(self.userID)
 
 class Authors(models.Model):
     firstname = models.CharField(max_length=255)
@@ -70,3 +70,12 @@ class Fines(models.Model):
     reason = models.CharField(max_length=255)
     dateIssued = models.DateField()
     datePaid = models.DateField()
+
+    def __str__(self):
+        return f"{self.borrowID}, amount:{self.amount}"
+
+# passwordpassword
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Users.objects.create(userID=instance, userType='Student', phoneNumber=None, department=None)
