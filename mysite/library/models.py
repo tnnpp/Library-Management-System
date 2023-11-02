@@ -16,7 +16,7 @@ class Users(models.Model):
     userType = models.CharField(max_length=50, choices=USER_CHOICES, default='Student')
 
     def book_borrowed(self):
-        book_borrow = Borrow.objects.filter(userID=self.userID)
+        book_borrow = Borrow.objects.filter(userID=self)
         return [borrow.bookID for borrow in book_borrow]
 
     def __str__(self):
@@ -38,10 +38,12 @@ class Books(models.Model):
     shelfLocation = models.CharField(max_length=255)
     STATUS_CHOICES = (
         ('Available', 'Available'),
-        ('Checked Out', 'Checked Out'),
-        ('Reserved', 'Reserved'),
+        ('Borrowed', 'Borrowed'),
     )
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+
+    def can_borrow(self):
+        return self.status == 'Available'
 
     def __str__(self):
         return  self.title
@@ -55,9 +57,8 @@ class Borrow(models.Model):
     returnDate = models.DateField(null=True)
 
     STATUS_CHOICES = (
-        ('Available', 'Available'),
-        ('Checked Out', 'Checked Out'),
-        ('Reserved', 'Reserved'),
+        ('Borrowed', 'Borrowed'),
+        ('returned', 'returned'),
     )
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
 

@@ -1,32 +1,44 @@
-<h1>{{books.title}}</h1>
+<h1>{{ books.title }}</h1>
 <table>
     <tr>
         <td>title</td>
-        <td>{{books.title}}</td>
+        <td>{{ books.title }}</td>
     </tr>
     <tr>
         <td>author</td>
-        <td>{{books.authorID}}</td>
+        <td>{{ books.authorID }}</td>
     </tr>
     <tr>
         <td>year</td>
-        <td>{{books.yearPublished}}</td>
+        <td>{{ books.yearPublished }}</td>
     </tr>
     <tr>
         <td>ISBN</td>
-        <td>{{books.ISBN}}</td>
+        <td>{{ books.ISBN }}</td>
     </tr>
     <tr>
         <td>genre</td>
-        <td>{{books.genre}}</td>
+        <td>{{ books.genre }}</td>
     </tr>
     <tr>
         <td>Shelf Location</td>
-        <td>{{books.shelfLocation}}</td>
+        <td>{{ books.shelfLocation }}</td>
     </tr>
     <tr>
         <td>Status</td>
-        <td>{{books.status}}</td>
+        <td>{{ books.status }}</td>
     </tr>
 </table>
-<a href="{% url 'library:home' %}"> Go back to home page.</a>
+
+<form action="{% url 'library:borrow' books.id %}" method="post">
+    {% csrf_token %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <input type="submit" class="borrow_button" value="Borrow">
+</form>
+<a href="{% url 'library:home' %}">Go back to the home page.</a>
