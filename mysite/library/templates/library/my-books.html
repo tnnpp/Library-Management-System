@@ -1,0 +1,22 @@
+<h1>My Books</h1>
+<!--Book list-->
+<table>
+    <tr>
+        <th>Book</th>
+        <th>Borrow Date</th>
+        <th>Due Date</th>
+        <th>Return Date</th>
+        <th>Status</th>
+        <th>Detail</th>
+    </tr>
+{% for book in books %}
+    <tr>
+        <td>{{book.bookID.title}}</td>
+        <td>{{book.borrowDate}}</td>
+        <td>{{book.dueDate}}</td>
+        <td>{{book.returnDate}}</td>
+        <td>{{book.status}}</td>
+        <td><a href="{% url 'library:book' book.bookID.id %}">Detail</a> </td>
+    </tr>
+{% endfor %}
+</table>

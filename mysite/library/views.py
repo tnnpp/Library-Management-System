@@ -14,7 +14,7 @@ def home(request):
 def search(request):
     if request.method == 'POST':
         query = request.POST['query']
-        results = Books.objects.filter(title__contains=query)
+        results = Books.objects.filter(ISBN__title__contains=query)
         return render(request, 'library/search.html', {'results': results})
 
 
@@ -34,7 +34,7 @@ def borrowbook(request, books_id):
         messages.error(request, "The books is not available.")
         return render(request, 'library/book.html', {'books': book})
     for i in user.book_borrowed():
-        if books_id == i :
+        if books_id == i.bookID :
             messages.error(request, "You already borrow this book.")
             return render(request, 'library/book.html', {'books': book})
     due_date = datetime.date.today() + datetime.timedelta(days=7)
@@ -45,3 +45,9 @@ def borrowbook(request, books_id):
     book.save()
     messages.success (request, "Borrowing Success!")
     return render(request, 'library/book.html', {'books': book})
+
+@login_required()
+def mybook(request):
+    user = get_object_or_404(Users, userID=request.user)
+    query = user.book_borrowed
+    return render(request, 'library/my-books.html', {'books':query})

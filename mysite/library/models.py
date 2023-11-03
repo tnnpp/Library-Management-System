@@ -17,7 +17,7 @@ class Users(models.Model):
 
     def book_borrowed(self):
         book_borrow = Borrow.objects.filter(userID=self)
-        return [borrow.bookID for borrow in book_borrow]
+        return [borrow for borrow in book_borrow]
 
     def __str__(self):
         return str(self.userID)
@@ -29,12 +29,18 @@ class Authors(models.Model):
     def __str__(self):
         return self.firstname
 
-class Books(models.Model):
+class BookInformation(models.Model):
+    ISBN = models.CharField(max_length=13)
     title = models.CharField(max_length=255)
     authorID = models.ForeignKey(Authors, on_delete=models.CASCADE)
-    ISBN = models.CharField(max_length=13)
     yearPublished = models.IntegerField()
     genre = models.CharField(max_length=255)
+
+    def __str__(self):
+        return  self.title
+
+class Books(models.Model):
+    ISBN = models.ForeignKey(BookInformation, on_delete=models.CASCADE)
     shelfLocation = models.CharField(max_length=255)
     STATUS_CHOICES = (
         ('Available', 'Available'),
@@ -46,7 +52,7 @@ class Books(models.Model):
         return self.status == 'Available'
 
     def __str__(self):
-        return  self.title
+        return self.ISBN.title
 
 
 class Borrow(models.Model):
@@ -75,7 +81,7 @@ class Fines(models.Model):
     def __str__(self):
         return f"{self.borrowID}, amount:{self.amount}"
 
-# passwordpassword
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
