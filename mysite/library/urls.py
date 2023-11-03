@@ -7,5 +7,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('<int:pk>/', views.DetailView.as_view(), name='book'),
     path('<int:books_id>/borrow/', views.borrowbook, name='borrow'),
-    path('mybook/', views.mybook, name='mybook')
+    path('mybook/', views.mybook, name='mybook'),
+    path('<int:books_id>/return/', views.return_book, name='return'),
    ]

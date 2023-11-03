@@ -64,7 +64,7 @@ class Borrow(models.Model):
 
     STATUS_CHOICES = (
         ('Borrowed', 'Borrowed'),
-        ('returned', 'returned'),
+        ('Returned', 'Returned'),
     )
     status = models.CharField(max_length=50, choices=STATUS_CHOICES)
 

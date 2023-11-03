@@ -47,7 +47,26 @@ def borrowbook(request, books_id):
     return render(request, 'library/book.html', {'books': book})
 
 @login_required()
+def return_book(request, books_id):
+    book = get_object_or_404(Books, pk=books_id)
+    user = get_object_or_404(Users, userID=request.user)
+    query = user.book_borrowed
+    if book.can_borrow():
+        messages.error(request,"You didn't borrowed this book.")
+    messages.success(request, "Returning Success!")
+    borrow = get_object_or_404(Borrow,bookID=book,status='Borrowed')
+    if borrow.status == 'Returned':
+        messages.error(request, "You have return this book")
+    borrow.returnDate = datetime.date.today()
+    borrow.status = 'Returned'
+    borrow.save()
+    book.status = 'Available'
+    book.save()
+    return render(request, 'library/my-books.html', {'borrows':query, 'user':user})
+
+
+@login_required()
 def mybook(request):
     user = get_object_or_404(Users, userID=request.user)
     query = user.book_borrowed
-    return render(request, 'library/my-books.html', {'books':query})
+    return render(request, 'library/my-books.html', {'borrows':query, 'user':user})
