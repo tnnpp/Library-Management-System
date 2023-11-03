@@ -1,6 +1,6 @@
 # Library-Management-System
 ## Installation 
-see [Installation](https://github.com/tnnpp/ku-polls/blob/main/Installation.md)
+see [Installation](https://github.com/tnnpp/Library-Management-System/blob/main/Installation.md)
 
 ## Demo Account 
 ### Admin
