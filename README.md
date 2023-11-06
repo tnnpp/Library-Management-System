@@ -4,8 +4,8 @@ see [Installation](https://github.com/tnnpp/Library-Management-System/blob/main/
 
 ## Demo Account 
 ### Admin
-* id: `Tonnam`
-* pass: `6510545519`
+* id: `admin`
+* pass: `passwordpassword`
 ### User
 * id: `harry`
 * pass: `passwordpassword`

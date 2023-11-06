@@ -11,32 +11,36 @@ git clone https://github.com/tnnpp/Library-Management-System.git
 cd Library-Management-System
 cd mysite
 ```
-2. Create virtual environment using this command.
+2. Installing the virtaualenv.
+```
+pip install virtualenv
+```
+3. Create virtual environment using this command.
 ```
 virtualenv venv
 ```
-3. Activate the virtual environment
+4. Activate the virtual environment
 ```
 # On Linux or MacOS
 source venv/bin/activate
 # On MS Windows
 venv\Scripts\activate
 ```
-4. Installing Dependencies
+5. Installing Dependencies
 ```
-pip install -r requirements.txt
+pip install -r requirement.txt
 ```
 ### Run migrations
 setting up the database by migration as the code fellows.
 ```
-python manage.py makemigrations library
-python manage.py migrate library
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 ### Install data from the data fixtures
-loading the data form user.json and polls.json into the application database using following code
+loading the data 
 ```
-python manage.py loaddata data/data_dump.sql
+python manage.py loaddata data/data_dump.json
 ```
 ### How to running the appliction
 Using following code
