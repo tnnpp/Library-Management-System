@@ -6,14 +6,14 @@ git clone https://github.com/tnnpp/Library-Management-System.git
 ```
 - Or download the repository from my Github
 ### Create a virtual environment and install dependencies
-1. Create virtual environment using this command.
-```
-virtualenv venv
-```
-2. change your directory to Library-Management-System and go to mysite folder
+1. change your directory to Library-Management-System and go to mysite folder
 ```
 cd Library-Management-System
 cd mysite
+```
+2. Create virtual environment using this command.
+```
+virtualenv venv
 ```
 3. Activate the virtual environment
 ```
