@@ -1,14 +1,48 @@
-<h1>search</h1>
-<form method="post" action="{% url 'library:search' %}"  >
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="../../static/css/layout.css" />
+  </head>
+  <body>
+    <header class="container-header">
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
         <input type="text" name="query" placeholder="Search" />
       </form>
-<h2>searched books</h2>
-<ul>
-    {% for result in results %}
-        <li><a href="{% url 'library:book' result.id %}">{{ result.ISBN.title }}</a></li>
-    {% empty %}
-        <li>No results found.</li>
-    {% endfor %}
-</ul>
-<a href="{% url 'library:home' %}"> Go back to home page.</a>
+      <div class="item-header-3">
+        <a href="{% url 'library:mybook' %}">My Books</a>
+        <a href="/accounts/login">Log In</a>
+        <a href="/signup"><button>Sign Up</button></a>
+      </div>
+    </header>
+    <main class="search-container">
+      <h1>Search</h1>
+      <form method="post" action="{% url 'library:search' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
+      <h2>Searched Books</h2>
+      <ul>
+        {% for result in results %}
+        <li>
+          <a href="{% url 'library:book' result.id %}"
+            >{{ result.ISBN.title }}</a
+          >
+        </li>
+        {% empty %}
+        <li>No books found</li>
+        {% endfor %}
+      </ul>
+      <div>← <a href="{% url 'library:home' %}"> Go to home page</a></div>
+    </main>
+    <footer>
+      <p>6610040435 Caroline Frössling</p>
+      <p>6510545675 Phavida Rattanamongkolkul</p>
+      <p>6510545519 Napasorn Tevarut</p>
+    </footer>
+  </body>
+</html>
