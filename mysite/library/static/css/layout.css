@@ -173,11 +173,26 @@ footer {
   vertical-align: top;
 }
 
-/* Search Page */
+/* Search Page, My Books Page */
 
-.search-container {
+.container {
   display: flex;
   flex-direction: column;
   padding: 50px;
   color: #0f2c59;
+}
+
+.link {
+  padding-top: 50px;
+}
+
+.table {
+  border-radius: 5px;
+}
+
+.table:nth-child(odd) {
+  background-color: #ffffff;
+}
+.table:nth-child(even) {
+  background-color: #f3f3f3;
 }

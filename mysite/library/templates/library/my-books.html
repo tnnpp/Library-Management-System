@@ -1,38 +1,76 @@
-<h3>Welcome {{user}}</h3>
-<h1>My Books</h1>
-<!--Book list-->
-<table>
-    <tr>
-        <th>Book</th>
-        <th>Borrow Date</th>
-        <th>Due Date</th>
-        <th>Return Date</th>
-        <th>Status</th>
-        <th>Detail</th>
-        <th>Return</th>
-    </tr>
-{% for borrow in borrows %}
-    <tr>
-        <td>{{borrow.bookID.ISBN.title}}</td>
-        <td>{{borrow.borrowDate}}</td>
-        <td>{{borrow.dueDate}}</td>
-        <td>{{borrow.returnDate}}</td>
-        <td>{{borrow.status}}</td>
-        <td><a href="{% url 'library:book' borrow.bookID.id %}">Detail</a> </td>
-        <td>
-            <form action="{% url 'library:return' borrow.bookID.id %}" method="post">
-            {% csrf_token %}
-            <input type="submit" class="return_button" value="Return">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="../../static/css/layout.css" />
+  </head>
+  <body>
+    <header class="container-header">
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
+      <div class="item-header-3">
+        <a href="{% url 'library:mybook' %}">My Books</a>
+        <a href="/accounts/login">Log In</a>
+        <a href="/signup"><button>Sign Up</button></a>
+      </div>
+    </header>
+    <main class="container">
+      <h3>Welcome {{user}}</h3>
+      <h1>My Books</h1>
+      <!--Book list-->
+      <table class="table">
+        <tr>
+          <th>Book</th>
+          <th>Borrow Date</th>
+          <th>Due Date</th>
+          <th>Return Date</th>
+          <th>Status</th>
+          <th>Detail</th>
+          <th>Return</th>
+        </tr>
+        {% for borrow in borrows %}
+        <tr>
+          <td>{{borrow.bookID.ISBN.title}}</td>
+          <td>{{borrow.borrowDate}}</td>
+          <td>{{borrow.dueDate}}</td>
+          <td>{{borrow.returnDate}}</td>
+          <td>{{borrow.status}}</td>
+          <td>
+            <a href="{% url 'library:book' borrow.bookID.id %}">Detail</a>
+          </td>
+          <td>
+            <form
+              action="{% url 'library:return' borrow.bookID.id %}"
+              method="post"
+            >
+              {% csrf_token %}
+              <input type="submit" class="return_button" value="Return" />
             </form>
-        </td>
-    </tr>
-{% endfor %}
-</table>
-<!--ERROR And SUCCESS messages-->
- {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <!--ERROR And SUCCESS messages-->
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <div class="link">
+        ← <a href="{% url 'library:home' %}"> Go to home page</a>
+      </div>
+    </main>
+    <footer>
+      <p>6610040435 Caroline Frössling</p>
+      <p>6510545675 Phavida Rattanamongkolkul</p>
+      <p>6510545519 Napasorn Tevarut</p>
+    </footer>
+  </body>
+</html>
