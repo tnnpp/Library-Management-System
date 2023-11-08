@@ -29,8 +29,8 @@ button:hover {
 input {
   padding: 10px 20px 10px 20px;
   background-color: #ffffff;
-  border-radius: 20px;
   border: none;
+  border-radius: 20px;
   font-family: "JetBrains Mono", monospace;
 }
 
@@ -41,9 +41,9 @@ a {
   text-decoration: none;
 }
 
-a:visited:hover {
-  color: #ffffff;
-  text-decoration: none;
+a:hover {
+  color: #0f2c59;
+  text-decoration: underline;
 }
 
 /* Header */
@@ -51,6 +51,7 @@ a:visited:hover {
 header {
   background-color: #bdd2db;
   padding: 30px;
+  color: #0f2c59;
 }
 
 .container-header {
@@ -134,7 +135,6 @@ footer {
 .container-form {
   display: grid;
   grid-template-columns: 700px;
-  grid-template-rows: 400px;
   justify-content: center;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -144,9 +144,16 @@ footer {
   border-radius: 10px;
   box-shadow: 2px 2px 10px -4px #000000;
   justify-self: stretch;
-  color: #f8f0e5;
-  background-color: #0f2c59;
   padding: 50px;
+  background-color: #bdd2db;
+  color: #0f2c59;
 }
 
+.button-form {
+  margin-bottom: 50px;
+  margin-left: 20px;
+}
 
+.link-form {
+  margin-top: 20px;
+}

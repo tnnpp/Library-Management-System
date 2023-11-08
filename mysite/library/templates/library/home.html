@@ -4,50 +4,44 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library Management System</title>
-    <link rel="stylesheet" href="/static/css/layout.css" />
+    <link rel="stylesheet" href="../../static/css/layout.css" />
   </head>
   <body>
     <header class="container-header">
-      <a href="/views/home.html">Library Management System</a>
-      <form method="post" action="{% url 'library:search' %}"  >
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
         <input type="text" name="query" placeholder="Search" />
       </form>
-      <dev class="item-header-3">
+      <div class="item-header-3">
         <a href="{% url 'library:mybook' %}">My Books</a>
         <a href="/accounts/login">Log In</a>
         <a href="/signup"><button>Sign Up</button></a>
-      </dev>
+      </div>
     </header>
     <main>
       <img src="/static/bookshelf.jpg" width="100%" />
-      <dev class="container-trending">
+      <div class="container-trending">
         <h1 class="item-title">Trending Books</h1>
-        <dev class="item-trending-1">
+        <div class="item-trending-1">
           <img src="/static/book2.jpg" class="image-trending" />
-          <a href="{% url 'library:book' 1 %}">
-            <h2>The Art of Strategic Innovation</h2>
-          </a>
-            <p>Noah Schumacher</p>
-          <!--<a href="/views/book.html"><button>Read More</button></a>-->
-        </dev>
-        <dev class="item-trending-2">
+          <h2>The Art of Strategic Innovation</h2>
+          <p>Noah Schumacher</p>
+          <a href="{% url 'library:book' 1 %}"><button>Read More</button></a>
+        </div>
+        <div class="item-trending-2">
           <img src="/static/book3.jpg" class="image-trending" />
-          <a href="{% url 'library:book' 2 %}">
-            <h2>The Language of Letters</h2>
-          </a>
+          <h2>The Language of Letters</h2>
           <p>Hanna Olsson</p>
-          <!--<a href="/views/book.html"><button>Read More</button></a>-->
-        </dev>
-        <dev class="item-trending-3">
+          <a href="{% url 'library:book' 2 %}"><button>Read More</button></a>
+        </div>
+        <div class="item-trending-3">
           <img src="/static/book1.jpg" class="image-trending" />
-          <a href="{% url 'library:book' 3 %}">
-            <h2>The Way</h2>
-          </a>
+          <h2>The Way</h2>
           <p>Howard Ong</p>
-          <!--<a href="/views/book.html"><button>Read More</button></a>-->
-        </dev>
-      </dev>
+          <a href="{% url 'library:book' 3 %}"><button>Read More</button></a>
+        </div>
+      </div>
     </main>
     <footer>
       <p>6610040435 Caroline Frössling</p>
