@@ -1,16 +1,53 @@
-<h2>Register</h2>
-<form method="POST">
-    {% csrf_token %}
-    <table style="padding: 2ex;">
-    {{ form.as_table }}     {# this line shows the sign-up form #}
-    <tr>
-    <td colspan="2">
-    <button type="submit">Register</button>
-    </td>
-    </tr>
-    </table>
-</form>
-Or <a href="{% url 'login' %}"> Login </a>.
-<div>
-<a href="{% url 'library:home' %}"> Go to home page.</a>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="../../static/css/layout.css" />
+  </head>
+  <body>
+    <header class="container-header">
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
+      <div class="item-header-3">
+        <a href="{% url 'library:mybook' %}">My Books</a>
+        <a href="/accounts/login">Log In</a>
+        <a href="/signup"><button>Sign Up</button></a>
+      </div>
+    </header>
+    <main>
+      <div class="container-form">
+        <div class="item-form">
+          <h1>Sign Up</h1>
+          <form class="signup-form" method="POST">
+            {% csrf_token %}
+            <table style="padding: 2ex">
+              {{ form.as_table }} {# this line shows the sign-up form #}
+              <tr>
+                <td colspan="2">
+                  <button class="button-signup-form" type="submit">
+                    Register
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </form>
+          <i>Do you already have an account?</i
+          ><a href="{% url 'login' %}"> Log in here</a>
+        </div>
+        <div class="link-form">
+          ← <a href="{% url 'library:home' %}"> Go to home page</a>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>6610040435 Caroline Frössling</p>
+      <p>6510545675 Phavida Rattanamongkolkul</p>
+      <p>6510545519 Napasorn Tevarut</p>
+    </footer>
+  </body>
+</html>

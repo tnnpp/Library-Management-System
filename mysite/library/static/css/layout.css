@@ -134,7 +134,7 @@ footer {
 
 .container-form {
   display: grid;
-  grid-template-columns: 700px;
+  grid-template-columns: 761px;
   justify-content: center;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -149,11 +149,22 @@ footer {
   color: #0f2c59;
 }
 
-.button-form {
+.button-login-form {
   margin-bottom: 50px;
+  margin-top: 10px;
   margin-left: 20px;
+}
+
+.button-signup-form {
+  margin-bottom: 30px;
+  margin-top: 10px;
 }
 
 .link-form {
   margin-top: 20px;
+}
+
+.signup-form {
+  text-align: left;
+  vertical-align: top;
 }
