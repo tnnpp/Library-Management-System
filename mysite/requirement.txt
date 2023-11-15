@@ -1,3 +1,4 @@
 #requirements
 Django
 django-allauth
+django-extensions

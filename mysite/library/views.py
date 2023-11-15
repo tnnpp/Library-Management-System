@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from django.views import generic
 from django.http import HttpResponseRedirect
@@ -44,7 +44,7 @@ def borrowbook(request, books_id):
     book.status = 'Borrowed'
     book.save()
     messages.success (request, "Borrowing Success!")
-    return render(request, 'library/book.html', {'books': book})
+    return redirect(reverse('library:book', kwargs={'pk': books_id}))
 
 @login_required()
 def return_book(request, books_id):
@@ -62,7 +62,8 @@ def return_book(request, books_id):
     borrow.save()
     book.status = 'Available'
     book.save()
-    return render(request, 'library/my-books.html', {'borrows':query, 'user':user})
+    return redirect(reverse('library:mybook'), {'borrows':query, 'user':user})
+
 
 
 @login_required()
