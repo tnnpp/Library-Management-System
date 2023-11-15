@@ -31,10 +31,15 @@ button:hover {
 
 input {
   padding: 10px 20px 10px 20px;
-  background-color: none;
+  background-color: #ffffff;
   border: 1px solid gray;
   border-radius: 5px;
   font-family: "JetBrains Mono", monospace;
+}
+
+input:hover {
+  background-color: #f2f2f2;
+  transition-duration: 0.3s;
 }
 
 /* Links */
@@ -173,7 +178,7 @@ footer {
   vertical-align: top;
 }
 
-/* Search Page, My Books Page */
+/* Search Page, My Books Page, Books Page */
 
 .container {
   display: flex;
@@ -188,11 +193,15 @@ footer {
 
 .table {
   border-radius: 5px;
+  padding: 10px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
 }
 
-.table:nth-child(odd) {
-  background-color: #ffffff;
+tr:nth-child(odd) {
+  background-color: #bdd2db;
 }
-.table:nth-child(even) {
-  background-color: #f3f3f3;
+
+td {
+  padding: 10px;
 }

@@ -1,44 +1,74 @@
-<h1>{{ books.title }}</h1>
-<table>
-    <tr>
-        <td>title</td>
-        <td>{{ books.ISBN.title }}</td>
-    </tr>
-    <tr>
-        <td>author</td>
-        <td>{{ books.ISBN.authorID }}</td>
-    </tr>
-    <tr>
-        <td>year</td>
-        <td>{{ books.ISBN.yearPublished }}</td>
-    </tr>
-    <tr>
-        <td>ISBN</td>
-        <td>{{ books.ISBN.ISBN }}</td>
-    </tr>
-    <tr>
-        <td>genre</td>
-        <td>{{ books.ISBN.genre }}</td>
-    </tr>
-    <tr>
-        <td>Shelf Location</td>
-        <td>{{ books.shelfLocation }}</td>
-    </tr>
-    <tr>
-        <td>Status</td>
-        <td>{{ books.status }}</td>
-    </tr>
-</table>
-
-<form action="{% url 'library:borrow' books.id %}" method="post">
-    {% csrf_token %}
-    {% if messages %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="../../static/css/layout.css" />
+  </head>
+  <body>
+    <header class="container-header">
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+      </form>
+      <div class="item-header-3">
+        <a href="{% url 'library:mybook' %}">My Books</a>
+        <a href="/accounts/login">Log In</a>
+        <a href="/signup"><button>Sign Up</button></a>
+      </div>
+    </header>
+    <main class="container">
+      <h1>{{ books.ISBN.title }}</h1>
+      <table class="table">
+        <tr>
+          <td><b>Title</b></td>
+          <td>{{ books.ISBN.title }}</td>
+        </tr>
+        <tr>
+          <td><b>Author</b></td>
+          <td>{{ books.ISBN.authorID }}</td>
+        </tr>
+        <tr>
+          <td><b>Year published</b></td>
+          <td>{{ books.ISBN.yearPublished }}</td>
+        </tr>
+        <tr>
+          <td><b>ISBN</b></td>
+          <td>{{ books.ISBN.ISBN }}</td>
+        </tr>
+        <tr>
+          <td><b>Genre</b></td>
+          <td>{{ books.ISBN.genre }}</td>
+        </tr>
+        <tr>
+          <td><b>Shelf location</b></td>
+          <td>{{ books.shelfLocation }}</td>
+        </tr>
+        <tr>
+          <td><b>Status</b></td>
+          <td>{{ books.status }}</td>
+        </tr>
+      </table>
+      <form action="{% url 'library:borrow' books.id %}" method="post">
+        {% csrf_token %} {% if messages %}
         <ul class="messages">
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
         </ul>
-    {% endif %}
-    <input type="submit" class="borrow_button" value="Borrow">
-</form>
-<a href="{% url 'library:home' %}">Go back to the home page.</a>
+        {% endif %}
+        <input type="submit" class="borrow_button" value="Borrow" />
+      </form>
+      <div class="link">
+        ← <a href="{% url 'library:home' %}"> Go to home page</a>
+      </div>
+    </main>
+    <footer>
+      <p>6610040435 Caroline Frössling</p>
+      <p>6510545675 Phavida Rattanamongkolkul</p>
+      <p>6510545519 Napasorn Tevarut</p>
+    </footer>
+  </body>
+</html>
