@@ -16,8 +16,7 @@ class Users(models.Model):
     userType = models.CharField(max_length=50, choices=USER_CHOICES, default='Student')
 
     def book_borrowed(self):
-        book_borrow = Borrow.objects.filter(userID=self)
-        return [borrow for borrow in book_borrow]
+        return Borrow.objects.filter(userID=self)
 
     def __str__(self):
         return str(self.userID)
@@ -76,7 +75,7 @@ class Fines(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     reason = models.CharField(max_length=255)
     dateIssued = models.DateField()
-    datePaid = models.DateField()
+    datePaid = models.DateField(null=True,blank=True)
 
     def __str__(self):
         return f"{self.borrowID}, amount:{self.amount}"

@@ -32,11 +32,11 @@ def borrowbook(request, books_id):
     # check if user can borrow book or not
     if not book.can_borrow():
         messages.error(request, "The books is not available.")
-        return render(request, 'library/book.html', {'books': book})
+        return redirect(reverse('library:book', kwargs={'pk': books_id}))
     for i in user.book_borrowed():
         if books_id == i.bookID :
             messages.error(request, "You already borrow this book.")
-            return render(request, 'library/book.html', {'books': book})
+            return redirect(reverse('library:book', kwargs={'pk': books_id}))
     due_date = datetime.date.today() + datetime.timedelta(days=7)
     # Create a new Borrow object
     borrow = Borrow(userID=user, bookID=book, borrowDate=datetime.date.today(), dueDate=due_date, status='Borrowed')
@@ -50,7 +50,7 @@ def borrowbook(request, books_id):
 def return_book(request, books_id):
     book = get_object_or_404(Books, pk=books_id)
     user = get_object_or_404(Users, userID=request.user)
-    query = user.book_borrowed
+    query = user.book_borrowed()
     if book.can_borrow():
         messages.error(request,"You didn't borrowed this book.")
     messages.success(request, "Returning Success!")
@@ -65,9 +65,39 @@ def return_book(request, books_id):
     return redirect(reverse('library:mybook'), {'borrows':query, 'user':user})
 
 
-
 @login_required()
 def mybook(request):
     user = get_object_or_404(Users, userID=request.user)
+    query = user.book_borrowed()
+    # create fines object automaticly when go to the page
+    if query:
+        for borrow in query:
+            if (datetime.date.today() > borrow.dueDate):
+                fine = (datetime.date.today() - borrow.dueDate).days * 10
+                if Fines.objects.filter(borrowID=borrow).exists():
+                    fine_get = Fines.objects.get(borrowID=borrow)
+                    fine_get.amount = fine
+                    fine_get.save()
+                    continue
+                if borrow.returnDate > borrow.dueDate:
+                    fine = (borrow.returnDate - borrow.dueDate).days * 10
+                    fine_create = Fines.objects.create(borrowID=borrow, amount=fine, reason="Late return",
+                                                       dateIssued=borrow.dueDate)
+                    fine_create.save()
+                    continue
+                # if fine object is not created yet
+                if (borrow.returnDate==None) :
+                    fine_create = Fines.objects.create(borrowID=borrow, amount=fine, reason="Late return", dateIssued=borrow.dueDate)
+                    fine_create.save()
+    fines = Fines.objects.all()
+    return render(request, 'library/my-books.html', {'borrows':query, 'user':user, 'fines':fines})
+
+@login_required()
+def fine_paid(request,borrow):
+    fine_get = get_object_or_404(Fines, pk=borrow)
+    fine_get.objects.delete()
+    user = get_object_or_404(Users, userID=request.user)
     query = user.book_borrowed
-    return render(request, 'library/my-books.html', {'borrows':query, 'user':user})
+    fines = Fines.objects.all()
+    return redirect(reverse('library:mybook'), {'borrows':query, 'user':user, 'fines':fines})
+

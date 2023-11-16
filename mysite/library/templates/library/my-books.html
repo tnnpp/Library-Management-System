@@ -55,6 +55,32 @@
         </tr>
         {% endfor %}
       </table>
+       <table class="table">
+        <tr>
+          <th>Book</th>
+          <th>Due Date</th>
+          <th>Return Date</th>
+          <th>amount</th>
+          <th>Paid</th>
+        </tr>
+        {% for fine in fines %}
+        <tr>
+          <td>{{fine.borrowID.bookID.ISBN.title}}</td>
+          <td>{{fine.borrowID.dueDate}}</td>
+          <td>{{fine.borrowID.returnDate}}</td>
+          <td>{{fine.amount}}</td>
+          <td>
+            <form
+              action="{% url 'library:paid' borrow.id %}"
+              method="post"
+            >
+              {% csrf_token %}
+              <input type="submit" class="return_button" value="Paid" />
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
       <!--ERROR And SUCCESS messages-->
       {% if messages %}
       <ul class="messages">
