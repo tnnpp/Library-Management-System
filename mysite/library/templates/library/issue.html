@@ -31,7 +31,7 @@
         {% csrf_token %}
         <label for="issues">Search by:</label>
         <select id="issues" name="issue">
-            <option value="Pending">Didn't paid fine user</option>
+            <option value="Pending">User who didn't paid fines</option>
             <option value="not_return">Didn't return book</option>
             <option value="overdue">User who return book over due date </option>
         </select>
@@ -40,7 +40,7 @@
     </main>
     {% if results %}
         {% if selected_issue == 'Pending' %}
-            <h2>Didn't paid fine user</h2>
+            <h2>User who didn't paid fines</h2>
               <ul>
                 {% for result in results %}
                 <li>
