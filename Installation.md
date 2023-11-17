@@ -38,9 +38,9 @@ python manage.py migrate
 ```
 
 ### Install data from the data fixtures
-loading the data 
+loading the data (load only data.json file)
 ```
-python manage.py loaddata data/data_dump.json
+python manage.py loaddata data/data.json
 ```
 ### How to running the appliction
 Using following code
