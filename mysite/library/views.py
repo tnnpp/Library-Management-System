@@ -1,20 +1,66 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import *
+from .models import Books,Users,Fines,BookInformation,Borrow
 from django.views import generic
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 import datetime
+from django.db import connection
 
 
 def home(request):
     return render(request, 'library/home.html')
 
 def search(request):
+    results=[]
     if request.method == 'POST':
-        query = request.POST['query']
-        results = Books.objects.filter(ISBN__title__contains=query)
+        query = request.POST.get('query', '')
+        categories = request.POST.get('categories', '')
+        if categories == 'Status':
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT bi.title, b.id
+                    FROM library_books b
+                    JOIN library_bookinformation bi ON b.ISBN_id = bi.id
+                    WHERE b.status = %s;
+                """, [query])
+                results = cursor.fetchall()
+        if categories == "Author":
+            if " " in query:
+                name = query.split(" ")
+                firstname = name[0]
+                lastname = name[1]
+                with connection.cursor() as cursor:
+                    cursor.execute("""
+                        SELECT bi.title, b.id
+                        FROM library_bookInformation bi
+                        JOIN library_authors a ON bi.authorID_id = a.id
+                        JOIN library_books b ON b.ISBN_id = bi.id
+                        WHERE a.firstName = %s and a.lastname = %s ;
+                    """, (firstname, lastname))
+                    results = cursor.fetchall()
+                    print(firstname,lastname)
+            else:
+                with connection.cursor() as cursor:
+                    cursor.execute("""
+                        SELECT bi.title, b.id
+                        FROM library_bookInformation bi
+                        JOIN library_authors a ON bi.authorID_id = a.id
+                        JOIN library_books b ON b.ISBN_id = bi.id
+                        WHERE a.firstName = %s ;
+                    """, [query])
+                    results = cursor.fetchall()
+        if categories == "Title":
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT bi.title, b.id
+                    FROM library_books b
+                    JOIN library_bookinformation bi ON b.ISBN_id = bi.id
+                    WHERE bi.title LIKE %s;
+                """, ['%' + query + '%'])
+                results = cursor.fetchall()
+
         return render(request, 'library/search.html', {'results': results})
 
 
@@ -100,4 +146,3 @@ def fine_paid(request,borrow):
     query = user.book_borrowed
     fines = Fines.objects.all()
     return redirect(reverse('library:mybook'), {'borrows':query, 'user':user, 'fines':fines})
-

@@ -12,6 +12,13 @@
       <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
         <input type="text" name="query" placeholder="Search" />
+        <label for="categories">Search by:</label>
+        <select id="categories" name="categories">
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Status">Status</option>
+        </select>
+        <input type="submit" value="Search">
       </form>
       <div class="item-header-3">
         <a href="{% url 'library:mybook' %}">My Books</a>
@@ -24,13 +31,20 @@
       <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
         <input type="text" name="query" placeholder="Search" />
+        <label for="categorie">Search by:</label>
+        <select id="categorie" name="categories">
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Status">Status</option>
+        </select>
+        <input type="submit" value="Search">
       </form>
       <h2>Searched Books</h2>
       <ul>
         {% for result in results %}
         <li>
-          <a href="{% url 'library:book' result.id %}"
-            >{{ result.ISBN.title }}</a
+          <a href="{% url 'library:book' result.1 %}"
+            >{{ result.0 }}</a
           >
         </li>
         {% empty %}
