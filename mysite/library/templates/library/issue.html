@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="../../static/css/layout.css" />
+  </head>
+  <body>
+    <header class="container-header">
+      <p>Library Management System</p>
+      <form method="post" action="{% url 'library:search' %}">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
+        <label for="categories">Search by:</label>
+        <select id="categories" name="categories">
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Status">Status</option>
+        </select>
+        <input type="submit" value="Search">
+      </form>
+      <div class="item-header-3">
+        <a href="{% url 'library:mybook' %}">My Books</a>
+        <a href="/accounts/login">Log In</a>
+        <a href="/signup"><button>Sign Up</button></a>
+      </div>
+    </header>
+    <main>
+        <form method="post" action="{% url 'library:issue' %}">
+        {% csrf_token %}
+        <label for="issues">Search by:</label>
+        <select id="issues" name="issue">
+            <option value="Pending">Didn't paid fine user</option>
+            <option value="not_return">Didn't return book</option>
+            <option value="overdue">User who return book over due date </option>
+        </select>
+        <input type="submit" value="Search">
+      </form>
+    </main>
+    {% if results %}
+        {% if selected_issue == 'Pending' %}
+            <h2>Didn't paid fine user</h2>
+              <ul>
+                {% for result in results %}
+                <li>
+                  {{ result.0}} {{result.1 }}
+                </li>
+                {% empty %}
+                <li>don't have any user who didn't paid fine</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if selected_issue == 'not_return' %}
+            <h2>Didn't return book</h2>
+            {% for result in results %}
+                <li>
+                  <a href="{% url 'library:book' result.1 %}">
+                    {{ result.0 }}</a>
+                </li>
+                {% empty %}
+                 <li>No books that didn't return yet</li>
+        {% endfor %}
+        {% endif %}
+        {% if selected_issue == 'overdue' %}
+            <h2>User who return book over due date </h2>
+                {% for result in results %}
+                    <li>
+                        {{ result.0 }} {{ result.1 }}  Book: {{ result.2 }}
+                    </li>
+                {% empty %}
+                {% endfor %}
+        {% endif %}
+    {% endif %}
+    <footer>
+      <p>6610040435 Caroline Frössling</p>
+      <p>6510545675 Phavida Rattanamongkolkul</p>
+      <p>6510545519 Napasorn Tevarut</p>
+    </footer>

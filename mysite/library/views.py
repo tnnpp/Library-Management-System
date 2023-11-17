@@ -150,10 +150,52 @@ def mybook(request):
     return render(request, 'library/my-books.html', {'borrows':query, 'user':user, 'fines':fines})
 
 @login_required()
-def fine_paid(request,borrow):
+def fine_paid(request, borrow):
     fine_get = get_object_or_404(Fines, pk=borrow)
     fine_get.objects.delete()
     user = get_object_or_404(Users, userID=request.user)
     query = user.book_borrowed
     fines = Fines.objects.all()
     return redirect(reverse('library:mybook'), {'borrows':query, 'user':user, 'fines':fines})
+
+def Issue_page(request):
+    results = []
+    issue = ''
+    if request.method == 'POST':
+        issue = request.POST.get('issue', '')
+        if issue == 'Pending':
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT DISTINCT a.first_name, a.last_name 
+                    FROM library_users u
+                    JOIN library_borrow bo ON u.id = bo.userID_id
+                    JOIN library_fines f ON bo.id = f.borrowID_id
+                    JOIN auth_user a ON u.userID_id = a.id
+                    WHERE f.datePaid IS NULL;
+                """)
+                results = cursor.fetchall()
+        if issue == 'not_return':
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT bi.title, b.id
+                    FROM library_borrow AS br
+                    JOIN library_books AS b ON br.bookID_id = b.id
+                    JOIN library_bookinformation AS bi ON b.ISBN_id = bi.id
+                    WHERE br.status = 'Borrowed' AND br.returnDate IS NULL;
+
+                """)
+                results = cursor.fetchall()
+        if issue == 'overdue':
+            with connection.cursor() as cursor:
+                cursor.execute("""
+                    SELECT a.first_name, a.last_name, bi.title
+                    FROM library_borrow bo
+                    JOIN library_users u ON bo.userID_id = u.id
+                    JOIN library_books b ON bo.bookID_id = b.id
+                    JOIN library_bookInformation bi ON b.ISBN_id = bi.ISBN
+                    JOIN auth_user a ON u.userID_id = a.id
+                    WHERE bo.returnDate IS NULL AND bo.dueDate < %s;
+                """, [datetime.date.today()])
+                results = cursor.fetchall()
+        print(results)
+    return render(request, 'library/issue.html', {'results': results,'selected_issue': issue})
