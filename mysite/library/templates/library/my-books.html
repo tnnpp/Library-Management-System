@@ -78,7 +78,7 @@
           <td>{{fine.amount}}</td>
           <td>
             <form
-              action="{% url 'library:paid' borrow.id %}"
+              action="{% url 'library:paid' fine.id %}"
               method="post"
             >
               {% csrf_token %}

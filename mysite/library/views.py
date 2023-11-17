@@ -152,7 +152,7 @@ def mybook(request):
 @login_required()
 def fine_paid(request, borrow):
     fine_get = get_object_or_404(Fines, pk=borrow)
-    fine_get.objects.delete()
+    fine_get.delete()
     user = get_object_or_404(Users, userID=request.user)
     query = user.book_borrowed
     fines = Fines.objects.all()
