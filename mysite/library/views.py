@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Books,Users,Fines,BookInformation,Borrow
 from django.views import generic
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
 import datetime
@@ -10,7 +9,19 @@ from django.db import connection
 
 
 def home(request):
-    return render(request, 'library/home.html')
+    with connection.cursor() as cursor:
+        cursor.execute("""
+            SELECT bi.title, COUNT(b.bookID_id) as borrow_count
+            FROM library_borrow b
+            JOIN library_books bk ON b.bookID_id = bk.id
+            JOIN library_bookinformation bi ON bk.ISBN_id = bi.id
+            GROUP BY b.bookID_id, bi.title
+            ORDER BY borrow_count DESC
+            LIMIT 3;
+        """)
+        results = cursor.fetchall()
+        print(results)
+    return render(request, 'library/home.html', {'popular_book': results})
 
 def search(request):
     results=[]

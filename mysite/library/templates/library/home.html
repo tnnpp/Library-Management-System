@@ -29,7 +29,7 @@
     <main>
       <img src="/static/bookshelf.jpg" width="100%" />
       <div class="container-trending">
-        <h1 class="item-title">Trending Books</h1>
+        <h1 class="item-title">Recommand Books</h1>
         <div class="item-trending-1">
           <img src="/static/book2.jpg" class="image-trending" />
           <h2>The Art of Strategic Innovation</h2>
@@ -48,6 +48,14 @@
           <p>Howard Ong</p>
           <a href="{% url 'library:book' 3 %}"><button>Read More</button></a>
         </div>
+      </div>
+      <div class="Popular">
+        <h3>Top 3 Popular</h3>
+        {% for i in popular_book %}
+        <p>
+          <b>{{ i.0}}</b> Have borrowed {{i.1}} times
+        </p>
+        {% endfor %}
       </div>
     </main>
     <footer>
