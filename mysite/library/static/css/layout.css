@@ -78,7 +78,7 @@ header {
 
 .item-header-3 {
   display: grid;
-  grid-template-columns: repeat(3, 110px);
+  grid-template-columns: repeat(4, 110px);
   justify-content: right;
   align-items: center;
 }
