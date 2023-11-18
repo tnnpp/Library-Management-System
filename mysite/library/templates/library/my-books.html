@@ -11,14 +11,14 @@
       <p>Library Management System</p>
       <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
-        <input type="text" name="query" placeholder="Search" />
         <label for="categorie">Search by:</label>
         <select id="categorie" name="categories">
-            <option value="Title">Title</option>
-            <option value="Author">Author</option>
-            <option value="Status">Status</option>
+          <option value="Title">Title</option>
+          <option value="Author">Author</option>
+          <option value="Status">Status</option>
         </select>
-        <input type="submit" value="Search">
+        <input type="text" name="query" placeholder="Keyword" />
+        <input type="submit" value="Search" />
       </form>
       <div class="item-header-3">
         <a href="{% url 'library:mybook' %}">My Books</a>
@@ -62,7 +62,8 @@
         </tr>
         {% endfor %}
       </table>
-       <table class="table">
+      <h1>My Fines</h1>
+      <table class="table">
         <tr>
           <th>Book</th>
           <th>Due Date</th>
@@ -77,10 +78,7 @@
           <td>{{fine.borrowID.returnDate}}</td>
           <td>{{fine.amount}}</td>
           <td>
-            <form
-              action="{% url 'library:paid' fine.id %}"
-              method="post"
-            >
+            <form action="{% url 'library:paid' fine.id %}" method="post">
               {% csrf_token %}
               <input type="submit" class="return_button" value="Paid" />
             </form>
