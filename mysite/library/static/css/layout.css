@@ -42,6 +42,14 @@ input:hover {
   transition-duration: 0.3s;
 }
 
+select {
+  font-family: "JetBrains Mono", monospace;
+  padding: 10px 20px 10px 20px;
+  background-color: #ffffff;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
 /* Links */
 
 a {
@@ -93,7 +101,7 @@ footer {
   column-gap: 30px;
   margin-left: 100px;
   margin-right: 100px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 
 .item-title {
@@ -137,6 +145,14 @@ footer {
   float: left;
   border-radius: 10px;
   padding-right: 20px;
+}
+
+.popular-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 100px;
+  padding-bottom: 20px;
+  color: #0f2c59;
 }
 
 /* Sign Up and Log In Forms*/
