@@ -64,6 +64,9 @@
       {% empty %}
       <li>There are no users who returned their book(s) past the due date</li>
       {% endfor %} {% endif %}
+      <div class="link">
+        ← <a href="{% url 'library:home' %}"> Go to home page</a>
+      </div>
     </main>
     <footer>
       <p>6610040435 Caroline Frössling</p>
