@@ -69,7 +69,7 @@ def search(request):
                     FROM library_books b
                     JOIN library_bookinformation bi ON b.ISBN_id = bi.id
                     WHERE bi.title LIKE %s;
-                """, ['%' + query + '%'])
+                """, [query + '%'])
                 results = cursor.fetchall()
 
         return render(request, 'library/search.html', {'results': results})
