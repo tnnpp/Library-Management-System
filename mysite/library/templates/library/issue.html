@@ -11,67 +11,69 @@
       <p>Library Management System</p>
       <form method="post" action="{% url 'library:search' %}">
         {% csrf_token %}
+        <input type="text" name="query" placeholder="Search" />
         <label for="categories">Search by:</label>
         <select id="categories" name="categories">
-          <option value="Title">Title</option>
-          <option value="Author">Author</option>
-          <option value="Status">Status</option>
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Status">Status</option>
         </select>
-        <input type="text" name="query" placeholder="Keyword" />
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search">
       </form>
       <div class="item-header-3">
-         <a href="{% url 'library:issue' %}">Issue</a>
+        <a href="{% url 'library:issue' %}">Issue</a>
         <a href="{% url 'library:mybook' %}">My Books</a>
         <a href="/accounts/login">Log In</a>
         <a href="/signup"><button>Sign Up</button></a>
       </div>
     </header>
-    <main class="container">
-      <form method="post" action="{% url 'library:issue' %}">
+    <main>
+        <form method="post" action="{% url 'library:issue' %}">
         {% csrf_token %}
         <label for="issues">Search by:</label>
         <select id="issues" name="issue">
-          <option value="Pending">Users who have not paid their fine(s)</option>
-          <option value="not_return">
-            Users who have not returned their book(s)
-          </option>
-          <option value="overdue">
-            Users who returned their book(s) past the due date
-          </option>
+            <option value="Pending">User who didn't paid fines</option>
+            <option value="not_return">Didn't return book</option>
+            <option value="overdue">User who return book over due date </option>
         </select>
-        <input type="submit" value="Search" />
+        <input type="submit" value="Search">
       </form>
-      {% if results %} {% if selected_issue == 'Pending' %}
-      <h2>User who didn't paid fines</h2>
-      <ul>
-        {% for result in results %}
-        <li>{{ result.0}} {{result.1 }}</li>
-        {% empty %}
-        <li>don't have any user who didn't paid fine</li>
-        {% endfor %}
-      </ul>
-      {% endif %} {% if selected_issue == 'not_return' %}
-      <h2>Didn't return book</h2>
-      {% for result in results %}
-      <li>
-        <a href="{% url 'library:book' result.1 %}"> {{ result.0 }}</a>
-      </li>
-      {% empty %}
-      <li>No books that didn't return yet</li>
-      {% endfor %} {% endif %} {% if selected_issue == 'overdue' %}
-      <h2>User who return book over due date</h2>
-      {% for result in results %}
-      <li>{{ result.0 }} {{ result.1 }} Book: {{ result.2 }}</li>
-      {% empty %} {% endfor %} {% endif %} {% endif %}
-      <div class="link">
-        ← <a href="{% url 'library:home' %}"> Go to home page</a>
-      </div>
     </main>
+    {% if selected_issue == 'Pending' %}
+        <h2>User who didn't paid fines</h2>
+          <ul>
+            {% for result in results %}
+            <li>
+              {{ result.0}} {{result.1 }}
+            </li>
+            {% empty %}
+            <li>don't have any user who didn't paid fine.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if selected_issue == 'not_return' %}
+        <h2>Didn't return book</h2>
+        {% for result in results %}
+            <li>
+              <a href="{% url 'library:book' result.1 %}">
+                {{ result.0 }}</a>
+            </li>
+            {% empty %}
+             <li>No books that didn't return yet.</li>
+    {% endfor %}
+    {% endif %}
+    {% if selected_issue == 'overdue' %}
+        <h2>User who return book over due date </h2>
+            {% for result in results %}
+                <li>
+                    {{ result.0 }} {{ result.1 }}  Book: {{ result.2 }}
+                </li>
+            {% empty %}
+             <li>No user who return book over due date.</li>
+        {% endfor %}
+    {% endif %}
     <footer>
       <p>6610040435 Caroline Frössling</p>
       <p>6510545675 Phavida Rattanamongkolkul</p>
       <p>6510545519 Napasorn Tevarut</p>
     </footer>
-  </body>
-</html>
