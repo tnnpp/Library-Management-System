@@ -17,7 +17,7 @@ button {
   border-radius: 5px;
   border: none;
   font-family: "JetBrains Mono", monospace;
-  font-size: 17px;
+  font-size: 15px;
   color: #0f2c59;
   transition-duration: 0.3s;
 }
@@ -41,6 +41,8 @@ input:hover {
   background-color: #f2f2f2;
   transition-duration: 0.3s;
 }
+
+/* Select fields */
 
 select {
   font-family: "JetBrains Mono", monospace;
@@ -78,7 +80,7 @@ header {
 
 .item-header-3 {
   display: grid;
-  grid-template-columns: repeat(4, 110px);
+  grid-template-columns: repeat(4, 98px);
   justify-content: right;
   align-items: center;
 }
@@ -93,7 +95,7 @@ footer {
   margin-top: auto;
 }
 
-/* Trending Books */
+/* Trending books */
 
 .container-trending {
   display: grid;
@@ -147,6 +149,8 @@ footer {
   padding-right: 20px;
 }
 
+/* Popular books */
+
 .popular-container {
   display: flex;
   flex-direction: column;
@@ -155,7 +159,7 @@ footer {
   color: #0f2c59;
 }
 
-/* Sign Up and Log In Forms*/
+/* Sign Up and Log In forms*/
 
 .container-form {
   display: grid;
@@ -194,7 +198,7 @@ footer {
   vertical-align: top;
 }
 
-/* Search Page, My Books Page, Books Page */
+/* Search page, My Books page, Books page, and Issue page */
 
 .container {
   display: flex;

@@ -21,30 +21,30 @@
         <input type="submit" value="Search" />
       </form>
       <div class="item-header-3">
-         <a href="{% url 'library:issue' %}">Issue</a>
+        <a href="{% url 'library:issue' %}">Issue</a>
         <a href="{% url 'library:mybook' %}">My Books</a>
         <a href="/accounts/login">Log In</a>
         <a href="/signup"><button>Sign Up</button></a>
       </div>
     </header>
     <main>
-      <img src="/static/bookshelf.jpg" width="100%" />
+      <img src="../../static/bookshelf.jpg" width="100%" />
       <div class="container-trending">
         <h1 class="item-title">Recommended Books</h1>
         <div class="item-trending-1">
-          <img src="/static/book2.jpg" class="image-trending" />
+          <img src="../../static/book2.jpg" class="image-trending" />
           <h2>The Art of Strategic Innovation</h2>
           <p>Noah Schumacher</p>
           <a href="{% url 'library:book' 1 %}"><button>Read More</button></a>
         </div>
         <div class="item-trending-2">
-          <img src="/static/book3.jpg" class="image-trending" />
+          <img src="../../static/book3.jpg" class="image-trending" />
           <h2>The Language of Letters</h2>
           <p>Hanna Olsson</p>
           <a href="{% url 'library:book' 2 %}"><button>Read More</button></a>
         </div>
         <div class="item-trending-3">
-          <img src="/static/book1.jpg" class="image-trending" />
+          <img src="../../static/book1.jpg" class="image-trending" />
           <h2>The Way</h2>
           <p>Howard Ong</p>
           <a href="{% url 'library:book' 3 %}"><button>Read More</button></a>
@@ -52,7 +52,7 @@
       </div>
       <div class="popular-container">
         <div class="Popular">
-          <h3>Top 3 Popular Books</h3>
+          <h1>Top 3 Popular Books</h1>
           {% for i in popular_book %}
           <p><b>{{ i.0}}</b> - Has been borrowed {{i.1}} time(s)</p>
           {% endfor %}
